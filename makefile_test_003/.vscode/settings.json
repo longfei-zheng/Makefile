@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "stdio.h": "c",
+        "local_add_int.h": "c"
+    }
+}

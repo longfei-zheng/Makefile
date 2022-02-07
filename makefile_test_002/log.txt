@@ -1,0 +1,100 @@
+zhenglf@ubuntu:~/Documents/makefile_test/makefile_test$ ll
+total 28
+drwxrwxr-x 3 zhenglf zhenglf 4096 Feb  7 10:02 ./
+drwxrwxr-x 8 zhenglf zhenglf 4096 Feb  7 09:49 ../
+-rw-rw-r-- 1 zhenglf zhenglf  156 Feb  7 10:01 main.c
+-rw-rw-r-- 1 zhenglf zhenglf  114 Feb  7 09:46 Makefile
+-rw-rw-r-- 1 zhenglf zhenglf  170 Feb  7 10:01 ref_add_int.c
+-rw-rw-r-- 1 zhenglf zhenglf   87 Feb  7 09:59 ref_add_int.h
+drwxrwxr-x 2 zhenglf zhenglf 4096 Feb  7 09:58 .vscode/
+zhenglf@ubuntu:~/Documents/makefile_test/makefile_test$ 
+zhenglf@ubuntu:~/Documents/makefile_test/makefile_test$ cat ./Makefile 
+main.out:main.o
+	gcc main.o -o main.out
+main.o:main.c
+	gcc -c main.c -o main.o
+
+clean:
+	rm -rf ./main.o ./main.out
+zhenglf@ubuntu:~/Documents/makefile_test/makefile_test$ 
+zhenglf@ubuntu:~/Documents/makefile_test/makefile_test$ make
+gcc -c main.c -o main.o
+gcc main.o -o main.out
+main.o: In function `main':
+main.c:(.text+0x1f): undefined reference to `add_int'
+collect2: error: ld returned 1 exit status
+Makefile:2: recipe for target 'main.out' failed
+make: *** [main.out] Error 1
+
+#################################################################
+zhenglf@ubuntu:~/Documents/makefile_test/makefile_test$ cat ./Makefile 
+main.out:main.o ref_add_int.o
+	gcc main.o ref_add_int  -o main.out   # ref_add_int should be ref_add_int.o
+
+main.o:main.c
+	gcc -c main.c -o main.o
+
+ref_add_int.o:ref_add_int.c
+	gcc -c ref_add_int.c -o ref_add_int.o
+
+clean:
+	rm -rf ./main.o ./main.out ref_add_int.o
+zhenglf@ubuntu:~/Documents/makefile_test/makefile_test$ 
+zhenglf@ubuntu:~/Documents/makefile_test/makefile_test$ make
+gcc -c ref_add_int.c -o ref_add_int.o
+gcc main.o ref_add_int -o main.out
+gcc: error: ref_add_int: No such file or directory
+Makefile:2: recipe for target 'main.out' failed
+make: *** [main.out] Error 1
+
+#################################################################
+zhenglf@ubuntu:~/Documents/makefile_test/makefile_test$ cat ./Makefile 
+main.out:main.o ref_add_int.o
+	gcc main.o ref_add_int.o  -o main.out
+
+main.o:main.c
+	gcc -c main.c -o main.o
+
+ref_add_int.o:ref_add_int.c
+	gcc -c ref_add_int.c -o ref_add_int.o
+
+clean:
+	rm -rf ./main.o ./main.out ref_add_int.o
+zhenglf@ubuntu:~/Documents/makefile_test/makefile_test$ 
+zhenglf@ubuntu:~/Documents/makefile_test/makefile_test$ make clean
+rm -rf ./main.o ./main.out ref_add_int.o
+zhenglf@ubuntu:~/Documents/makefile_test/makefile_test$ 
+zhenglf@ubuntu:~/Documents/makefile_test/makefile_test$ 
+zhenglf@ubuntu:~/Documents/makefile_test/makefile_test$ 
+zhenglf@ubuntu:~/Documents/makefile_test/makefile_test$ make
+gcc -c main.c -o main.o
+gcc -c ref_add_int.c -o ref_add_int.o
+gcc main.o ref_add_int.o  -o main.out
+zhenglf@ubuntu:~/Documents/makefile_test/makefile_test$ 
+zhenglf@ubuntu:~/Documents/makefile_test/makefile_test$ ll
+total 52
+drwxrwxr-x 3 zhenglf zhenglf 4096 Feb  7 10:09 ./
+drwxrwxr-x 8 zhenglf zhenglf 4096 Feb  7 09:49 ../
+-rw-rw-r-- 1 zhenglf zhenglf 2117 Feb  7 10:09 help.txt
+-rw-rw-r-- 1 zhenglf zhenglf  156 Feb  7 10:01 main.c
+-rw-rw-r-- 1 zhenglf zhenglf 1688 Feb  7 10:09 main.o
+-rwxrwxr-x 1 zhenglf zhenglf 8416 Feb  7 10:09 main.out*
+-rw-rw-r-- 1 zhenglf zhenglf  226 Feb  7 10:05 Makefile
+-rw-rw-r-- 1 zhenglf zhenglf  170 Feb  7 10:01 ref_add_int.c
+-rw-rw-r-- 1 zhenglf zhenglf   87 Feb  7 09:59 ref_add_int.h
+-rw-rw-r-- 1 zhenglf zhenglf 1752 Feb  7 10:09 ref_add_int.o
+drwxrwxr-x 2 zhenglf zhenglf 4096 Feb  7 09:58 .vscode/
+zhenglf@ubuntu:~/Documents/makefile_test/makefile_test$ ./main.out 
+hello main!
+hello add_int!
+c=5
+end add_int!
+end main!
+zhenglf@ubuntu:~/Documents/makefile_test/makefile_test$ 
+
+
+
+
+
+
+
